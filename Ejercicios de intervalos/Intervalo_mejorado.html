@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Documento sin t&iacute;tulo</title>
+	<script>
+	
+
+		// Variable incial de la cuenta. La funcion "setInterval"= es como un bucle que va repitiendose hazta que se cierre 
+			
+		 var aleatorio=0;// Estos son variables globales para que las dos funciones las puedan leer
+		 var intervalo;
+		 var contador=1;
+		function iniciar(){//con el onclick del bottom se inicializa
+		 
+		    aleatorio= Math.floor((Math.random()*10)+1);//genero un numero aleatorip
+		    console.log(aleatorio);//miro en consola el valor aleatorio
+			
+			var cuenta=10;//cojo el valor del input
+			
+			  intervalo = setInterval(function(){
+		
+					//mientras que cuneta sea mayor que 0 
+					if(cuenta >=0){
+					
+					
+					 document.getElementById("cambio").innerHTML=cuenta;
+					 cuenta--;//Decrementa
+					
+					 
+					}else {
+					 document.getElementById("mensaje").innerHTML="Haz perdido";
+					 clearInterval(intervalo);
+					 aleatorio=0;
+					}
+				  },1000);
+			
+		  
+         }
+		 
+		   //Veo la respuesta y miro haber si es la misma que el numero aleatorio
+		 function corregir(){
+		     document.getElementById("contador").innerHTML= contador++;;
+			 var resp =document.getElementById("respuesta").value;//Tomo el valor del input
+				 
+		      if( aleatorio==resp){
+				   
+					 document.getElementById("mensaje").innerHTML="Haz adivinado";
+					 clearInterval(intervalo);
+					 }
+		 } 
+	</script>
+
+</head>
+
+<body>
+
+  
+  <input type="submit" name="dato" value="Empezar" onClick="iniciar()">
+  <p id="cambio"></p>	
+  <h1>Adivina</h1>
+  <p>Introduce numero del 1 al 10:</p>
+  <input type="text" name="respuesta" id="respuesta"> 
+  <input type="submit" name="dato" value="Aceptar" onClick="corregir()">
+  <p id="mensaje"></p>
+  <span> Tus intentos son: </span>
+   <p id="contador"></p>
+ 
+</body>
+</html>
