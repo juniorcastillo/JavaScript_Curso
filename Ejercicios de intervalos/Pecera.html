@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Documento sin t&iacute;tulo</title>
+    <style>
+	 #capa{
+	width:600px;
+    height:400px;
+	border: 1px solid;
+	background-color:white;
+    padding-top:0px;
+	
+	}
+	#capaInterna{
+	 position: relative;
+	}
+	</style>
+	<script>
+	
+        
+		var largo=0;//Se puede decir que es el contador
+		var longitud=0;	
+		function iniciar(){//con el onclick del button se inicializa
+		
+		 longitud=document.getElementById("longi").value;//cojo el valor de la logitud introducida
+		 var tiempo= document.getElementById("intervalo").value;//cojo el valor del intervalo
+		 largo=0;//Inicializo la variable denuevo	
+		 
+		 intervalo = setInterval(function(){//comienza el intervalo
+		           
+					//mientras que cuneta sea mayor que 0 
+					if(largo <=longitud ){
+						 //Con esto le doy el color del background al div (capa) con este metodo
+						 document.getElementById("capaInterna").style.background=document.getElementById("color").value;
+						 //Cambio el ancho que tiene con este metodo y cambio lo que hay en el id miCuenta
+						 
+						 document.getElementById("capaInterna").style.height=largo + "px";
+						 document.getElementById("micuenta").innerHTML=largo;//Esto es para poner el % 
+						 largo++;
+						 
+					
+					 
+			}else{
+						clearInterval(intervalo);
+					}
+				  },tiempo);
+			
+		   	 
+			  
+	
+		  
+        }	
+			
+		    	
+		/**Esta funcion lo que hace es subir la capa pintada
+		haciendo creer a simple vista que se esta llenando
+		
+		*/
+		function sube(){
+		  var retro=document.getElementById("longi").value;
+	      var x=0;
+	          interva= setInterval(function(){
+				  	if(x <retro ){
+						document.getElementById("micuenta").innerHTML="Entro";
+						retro--; 
+					    document.getElementById("capaInterna").style.height=retro + "px";	 
+					    document.getElementById("micuenta").innerHTML=retro;
+					 
+				    }else clearInterval(interva);	
+				
+			    },10);
+            
+        }
+		 	
+		
+						
+	</script>
+
+</head>
+
+<body>
+
+  
+  Longitud: <input type="number" name="color" id="longi"> <br>
+  Color:    <input type="color" name="color" id="color"><br> 
+  Tiempo x pixel: <input type="number" name="intervalo" id="intervalo"> <br>
+  
+  <button  onclick="iniciar()" id="aceptar">Llenar </button><br>
+  <span id="micuenta"></span>% 
+  <div id="capa">
+   <p id="capaInterna"></p>
+  
+  </div>
+  <button  onclick="sube()" id="ace">Vaciar</button><br>
+  	
+</body>
+</html>
