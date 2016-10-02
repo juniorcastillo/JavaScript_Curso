@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<style>
+#contenedor {
+  position: absolute;
+  width: 800px;
+  height: 500px;
+  background-color:gray;
+  
+}
+.coche{
+          
+		   
+            position: absolute;
+        
+            width:50px;
+			height:50px;
+			border-radius:100%;
+			
+        }
+</style>
+
+<script>
+ 
+  var izquierda;
+  var arriba;
+  var idCarro=1;//Cuenta los coches que se han creado
+  var debajo=0;
+  var color;
+  
+function inicio() {
+	
+		var crear=setInterval(function(){//Genera 4 coches
+			 var coche = document.createElement("div");
+			 if(idCarro<5){
+				  coche.className = "coche";
+				  coche.id=idCarro;//Id de los coches (cuenta los carros)
+				  idCarro++;//contador	//directamente añado la la  bola en el contenedor
+				  document.getElementById("contenedor").appendChild(coche);
+				  izquierda= coche.offsetLeft;//posicion izquierda
+                  arriba=coche.offsetTop;//posicion arriba
+				  empezarCarrera(coche);//Envio el object creado
+				  debajo= debajo+55;
+				  coche.style.top=debajo + "px";
+				  coche.style.backgroundColor = generaColor(color);
+				 
+			   }else{
+			   
+				clearInterval(crear);
+			   
+			   
+			   }
+		});
+		
+		
+		function empezarCarrera(elem){
+				//Genera el movimientos de los coches 
+             var iz=elem.offsetLeft;  
+			 var velocidad=getRand(40,60);//genero la velocidad aleatoriamente 
+			 var inter= setInterval(movimiento, velocidad);//inicio el intervalo
+ 
+			 function movimiento() {//Muevo los coches
+				if (iz<700)  {
+				    iz++;
+				   elem.style.left = iz + 'px';
+				 
+				 
+				}else{
+				
+				 clearInterval(inter);
+				}
+            }
+		}
+		
+  }
+    function generaColor(color){
+	  var colores=color;
+    	colores = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+
+  		 return colores;
+
+    }
+	
+    function getRand(min, max) {
+
+		return Math.random() * (max - min) + min;
+    }
+
+ 
+   
+
+</script>
+<body>
+
+<p>
+<button onclick="inicio()">Click Me</button>
+</p>
+
+<div id ="contenedor">
+
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<style>
+	#contenedor {
+	  width: 900px;
+	  height: 500px;
+	  position: absolute;
+	  background: yellow;
+	}
+	#avion{
+	position: absolute;
+	
+	
+	}
+	
+	.bomba	{
+	  position:absolute;
+	  background-image:url(bomba.gif);
+	  background-size:30px 30px;
+	  width:30px;
+	  height:30px;	
+	}
+	.explosion{
+	  position:absolute;
+	  background-size:40px 40px;
+	  background-image:url(ex.gif);
+	  width:40px;
+	  height:40px;	
+     
+	
+	}
+  .casa{
+  
+  	  position:absolute;
+	  background-size:40px 40px;
+	  background-image:url(casa.png);
+	  width:40px;
+	  height:40px;	
+     
+  
+  
+  
+  }
+</style>
+
+
+<script>
+
+   
+ //Hago que el avion se mueva horizontal
+ 
+	
+	var posicion;
+	var top;
+	function movimientoAvion(){
+	      creaCasa();
+	       var avion= document.getElementById("avion");
+		   avion.className="avion";
+		   
+			 posicion = avion.offsetLeft;
+			 top=avion.offsetTop;
+			var id = setInterval(frame, 5);
+			function frame() {
+				if (posicion < 800) {
+				   posicion++;
+				   avion.style.left = posicion + 'px';
+				   top=avion.offsetTop;
+				   avion.setAttribute("onclick","crearBomba(posicion)");//Envio la posicion actual donde esta el avion
+				} else {
+				  posicion = 20;
+				  avion.style.left = posicion + 'px';
+				  
+				}
+			}
+			
+		}
+	var contado= 0;
+	
+	
+	//Esta funcion crea bomba
+	 function crearBomba(posicion) {
+	 
+	   
+	  	
+		
+		
+		var bomba = document.createElement("div"); 
+	    document.getElementById("contenedor").appendChild(bomba);
+		
+			bomba.className = "bomba"; //LE pongo una class
+            bomba.id=contado;
+			contado++;
+            console.log(bomba.id);
+			bomba.style.left =posicion +"px" ; 
+			//posicion+= 60;
+					
+
+		
+		
+			//Caida de la bomba
+             var altura=0;
+			var cai = setInterval(function() {
+			  
+				if (altura < 400) {
+				console.log("caida entra");
+				  altura++;
+				  bomba.style.top = altura +'px';//Cambio el top de su posicion para que caida la bomba
+				  
+				} else {
+				  borrar(bomba);
+				  
+				 var ex = document.createElement("div"); 
+	             document.getElementById("contenedor").appendChild(ex);
+                 ex.style.top = altura +'px';
+				 ex.style.left = posicion +'px';
+	             ex.className = "explosion"; //LE pongo una class
+				  clearInterval(cai);
+				 
+				  
+		   			
+			    }
+			   }, 5);
+
+	 
+    } 
+	//Crea edificios aleatoriamente
+	function creaCasa(){
+     var max=;
+	 var min=1;
+	 var c=0;
+	 
+		while(c<4){
+			 var casa =document.createElement("div");
+			 document.getElementById("contenedor").appendChild(casa);
+			 casa.className = "casa"; //LE pongo una class
+			 casa.id=c;
+			 c++;
+			 console.log(casa.id);
+			  casa.style.top=400 + "px";
+			 casa.style.left=  Math.floor((Math.random() * max)+min)+"px"; 
+		}
+	 
+	} 
+	function borrar(bola) {
+
+            bola.parentNode.removeChild(bola);
+
+        }
+	
+	
+	
+	
+ 
+ 
+   
+
+</script>
+</head>
+<body>
+
+<p>
+<button onclick="movimientoAvion()">Empezar</button>
+</p>
+
+<div id ="contenedor">
+<img id="avion" src="avion.png" alt="avion"></img>
+
+</div>
+
+
+</body>
+</html>
