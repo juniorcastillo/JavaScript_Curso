@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Documento sin t&iacute;tulo</title>
+<style>
+		#contenedor{
+			position:absolute;
+		    top:530px;
+		}
+		#capa{
+            position:absolute;
+			top:1px;
+			left:1px;
+			height:500px;
+			background-color:green;
+			width:0px;
+		}
+		#division{
+			position:relative;
+			left:460px;
+			top:1px;
+			background-color:white;
+			width:10px;
+			height:0px;
+			
+			
+		}
+		span{
+			color:red;
+		}
+		.equipo1{
+		    position:absolute;
+			width:20px;
+			height:20px;
+		    border-radius:100%;
+		    background-color:blue;
+		
+		}
+		.equipo2{
+		    position:absolute;
+			width:20px;
+			height:20px;
+		    border-radius:100%;
+		    background-color:red;
+		
+		}
+</style>
+<script>
+	
+        
+		var largo=1;//Se puede decir que es el contador
+		var longitud=1000;		
+		var campo;
+		var lon=1;
+		var cantidadJugadores1;
+		var cantidadJugadores2;
+		var color;
+		var jugador2;
+		var jugador1;
+		
+		function crear(){//con el onclick del button se inicializa
+	
+			document.getElementById("crea").disabled = true;
+		 
+			  intervalo = setInterval(function(){//comienza el intervalo
+		
+					//mientras que cuneta sea mayor que 0 
+					if(largo<=longitud ){
+					    largo++;
+				     //Cambio el ancho que tiene con este metodo y cambio lo que hay en el id miCuenta
+				       campo=document.getElementById("capa");
+					   capa.style.width=largo + "px";
+						 
+						 
+					  
+					 
+					}else{
+						clearInterval(intervalo);
+					}
+				  },5);
+			
+		  
+        }
+		 //Crea una linea en medio del campo para dividirlo
+		function lineas(){
+		
+			
+			inter=setInterval(function(){
+			
+			  document.getElementById("divide").disabled = true;
+		 
+				//mientras que cuneta sea mayor que 0 
+					if(lon<=497){
+					    lon++;
+				     //Cambio el ancho que tiene con este metodo y cambio lo que hay en el id miCuenta
+				       campo=document.getElementById("division");
+					   division.style.height=lon + "px";
+						 
+						 
+					  
+					 
+					}else{
+						clearInterval(inter);
+					}
+
+			
+			},5);
+		
+		}  
+
+   //Crea jugadores de ambos equipo
+    function crearJugadores(){
+	       var izquierda;
+		   var arriba;
+	       var izquierda1;
+		   var arriba1;
+		   //desabilito el boton crea jugador
+	       document.getElementById("creajugador").disabled = true;
+           cantidadJugadores1= document.getElementById("equipo").value;
+		   cantidadJugadores2= document.getElementById("equipo2").value;
+		 
+			//Cuenta los click que le das a la bola envio el valor la la funcion seleccion cunado le hago click a una bola en especifica
+			
+			   for(var i=0; i<cantidadJugadores1; i++){
+			   
+			     //Creo el elemento
+			 	  jugador1 = document.createElement("div");
+				 //Creo una clase jugador
+				  jugador1.className = "equipo1";
+				 //Asigna evento onclick
+			      jugador1.onclick = seleccion;
+				 //Id de los jugadores (Cuenta carros)
+				  jugador1.id= "jugador" + i;
+				  document.getElementById("capa").appendChild(jugador1);
+			
+				      izquierda=getRand(10,350);
+					  arriba=getRand(10,370);
+					  jugador1.style.left=izquierda + "px";
+					  jugador1.style.top=arriba + "px";
+					//Le asigno un valor al objeto
+					  jugador1.value =0;
+	              //Envio los valores de cada jugador cuando se haga un onclick
+			      jugador1.setAttribute("onclick","seleccion(this)");
+			    }
+				
+				
+			
+			   for(var n=0; n<cantidadJugadores2; n++){
+			     
+			 	  jugador2 = document.createElement("div");//Creo el elemento
+				  jugador2.className = "equipo2";//Creo una clase jugador
+				 //Asigna evento onclick
+			      jugador2.onclick = seleccion;
+				  jugador2.id= "jugador" + n;//Id de los jugadores (Cuenta carros)
+				  document.getElementById("capa").appendChild(jugador2);
+			        //Genera la position de la izquierda
+				      izquierda1=getRand(480,950);
+					//Genera la position de la derecha
+					  arriba1=getRand(10,370);
+					//asigno cada posicion
+					  jugador2.style.left=izquierda1 + "px";
+					//asigno cada posicion
+					  jugador2.style.top=arriba1 + "px";
+					//Le asigno un valor al objeto
+	                 jugador2.value =0;
+					 //Envio los valores de cada jugador cuando se haga un onclick
+					 jugador2.setAttribute("onclick","seleccion(this)");
+			    }
+			
+			      
+				
+	
+	}
+	
+	
+		
+		//Cuento cuantas veces le hago click a las bolas 
+		 function seleccion(contador) {
+		
+		 contador.value++;
+          
+		  
+		  document.getElementById("cuenta").innerHTML=  contador.className + " ID " +contador.id + " click " + contador.value;
+		  }
+		  
+
+
+
+
+    function generaColor(color){
+		  var colores=color;
+		  colores = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+
+  		 return colores;
+
+    }
+
+    	
+    function getRand(min, max) {
+
+		return Math.random() * (max - min) + min;
+    }	
+</script>
+
+</head>
+
+<body>
+
+
+
+
+	    <div id="capa">
+		<div id="division"></div>
+	    </div><br>
+	    <div id="contenedor">
+		
+			  <button  onclick="crear()" id="crea">Crear campo</button>
+			  <button  onclick="lineas()" id="divide">crear division</button><br><br>
+			  <span>Equipo1:</span> <input type="number" name="equipo" id="equipo">
+			  <span>Equipo2:</span>   <input type="number" name="equipo2" id="equipo2">
+			  <button  onclick="crearJugadores()" id="creajugador">Crear jugadores</button>  
+			  
+			  <div id="cuenta">ff</div>
+	    </div>	
+</body>
+</html>
