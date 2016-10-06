@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Documento sin t&iacute;tulo</title>
+    <style>
+	 #capa{
+	height:60px;
+	}
+	</style>
+	<script>
+	
+        
+		var largo=0;//Se puede decir que es el contador
+				
+		function iniciar(){//con el onclick del button se inicializa
+		
+		 var longitud=document.getElementById("longi").value;//cojo el valor de la logitud introducida
+		 var tiempo= document.getElementById("intervalo").value;//cojo el valor del intervalo
+		 largo=0;//Inicializo la variable denuevo	
+		 
+			  intervalo = setInterval(function(){//comienza el intervalo
+		
+					//mientras que cuneta sea mayor que 0 
+					if(largo<=longitud ){
+						 //Con esto le doy el color del background al div (capa) con este metodo
+						 document.getElementById("capa").style.background=document.getElementById("color").value;
+						 //Cambio el ancho que tiene con este metodo y cambio lo que hay en el id miCuenta
+						 
+						 document.getElementById("capa").style.width=largo + "px";
+						 document.getElementById("micuenta").innerHTML=largo;//Esto es para poner el % 
+						 largo++;
+						 
+					  
+					 
+					}else{
+						clearInterval(intervalo);
+					}
+				  },tiempo);
+			
+		  
+        }
+		 
+		   
+	</script>
+
+</head>
+
+<body>
+
+  
+  Longitud: <input type="number" name="color" id="longi"> <br>
+  Color:    <input type="color" name="color" id="color"><br> 
+  Tiempo x pixel: <input type="number" name="intervalo" id="intervalo"> <br>
+  
+  <button  onclick="iniciar()" id="aceptar">Aceptar </button><br>
+  <span id="micuenta"></span>% 
+  <div id="capa"></div>
+  
+  	
+</body>
+</html>

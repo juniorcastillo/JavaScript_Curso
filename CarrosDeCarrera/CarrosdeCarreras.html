@@ -1,81 +1,153 @@
 <!DOCTYPE html>
 <html>
+<head>
+ <meta charset="UTF-8">
 <style>
 #contenedor {
   position: absolute;
-  width: 800px;
+  top:150px;
+  width:1000px;
   height: 500px;
   background-color:gray;
   
 }
 .coche{
-          
-		   
-            position: absolute;
-        
-            width:50px;
-			height:50px;
-			border-radius:100%;
+           
+    position: absolute;   
+    width:50px;
+	height:50px;
+    border-radius:100%;
 			
         }
-</style>
+#ini{
+    position: absolute;
+	left:1px;
+    width:200px;
+	height:500px;
+   
+}
+#fin{
+	position: absolute;
+	left:800px;
+    width:200px;
+	height:500px;
 
+
+}
+#apuesta{
+	border:1px solid black;
+    float:right;
+
+
+}
+#participantes{
+    float:right;	
+	width:200px;
+	border:1px solid black;
+    left:800px;
+	top:1px;
+
+}
+#posicion{
+  
+    float:right;
+	border:1px solid black;
+	width:300px;
+	height:100px;
+	text-align:center;
+}
+</style>
+</head>
 <script>
  
-  var izquierda;
+  var izquierda=0;//Utilizo para cambiar la posicion absoluta de la izquierda
   var arriba;
-  var idCarro=1;//Cuenta los coches que se han creado
-  var debajo=0;
-  var color;
-  
-function inicio() {
-	
-		var crear=setInterval(function(){//Genera 4 coches
-			 var coche = document.createElement("div");
-			 if(idCarro<5){
-				  coche.className = "coche";
-				  coche.id=idCarro;//Id de los coches (cuenta los carros)
-				  idCarro++;//contador	//directamente añado la la  bola en el contenedor
+  var debajo=0;//Poner los coches debajo
+  var idCarro=0;//Cuenta los coches que se han creado
+  var velocidad;
+  var color;//Guarda el color generado
+  var numeroCoches=0;//Cantidad de coches
+  var clasificacion=[];//Lo utilizo para guardar el id de cada coche para mostrar quien llego primero
+  var cantidad;
+  var cuentaClasificacion=0;//Es un contador del array clasificacion
+     
+	  
+   function crear(){//Genera los coches que le mando como parametros
+           cantidad= document.getElementById("numCoches").value;
+		
+			 
+			   for(var i=0; i<cantidad; i++){
+			 
+			 	  var coche = document.createElement("div");//Creo el elemento
+				  coche.className = "coche";//Creo una clase coche
+				  coche.id= "coche" + i;//Id de los coches (cuenta los carros)
 				  document.getElementById("contenedor").appendChild(coche);
 				  izquierda= coche.offsetLeft;//posicion izquierda
                   arriba=coche.offsetTop;//posicion arriba
-				  empezarCarrera(coche);//Envio el object creado
-				  debajo= debajo+55;
+				  debajo= debajo+55;//Le doy la posicion debajo del otro
 				  coche.style.top=debajo + "px";
 				  coche.style.backgroundColor = generaColor(color);
-				 
-			   }else{
+	
 			   
-				clearInterval(crear);
-			   
-			   
-			   }
-		});
-		
-		
-		function empezarCarrera(elem){
-				//Genera el movimientos de los coches 
-             var iz=elem.offsetLeft;  
-			 var velocidad=getRand(40,60);//genero la velocidad aleatoriamente 
-			 var inter= setInterval(movimiento, velocidad);//inicio el intervalo
- 
-			 function movimiento() {//Muevo los coches
-				if (iz<700)  {
-				    iz++;
-				   elem.style.left = iz + 'px';
-				 
-				 
-				}else{
-				
-				 clearInterval(inter);
-				}
-            }
+			    }
+			   document.getElementById("ponerCoches").disabled=true;
 		}
-		
-  }
-    function generaColor(color){
-	  var colores=color;
-    	colores = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+	 
+			 //Recojo todos lo objectos coches creados por el id y los envio a la funcion mover
+	   function empezar(){
+						for(var i =0; i <= cantidad; i++){
+							var coche = "coche" + i;
+							velocidad=getRand(10,30);
+							moverCoches(document.getElementById(coche,velocidad));
+							console.log(document.getElementById(coche));
+						}
+			}
+		//Mueve los coches (cambia left)
+	   function moverCoches(coche){
+				//Deshabilito el boton de empezar carrera
+				document.getElementById("empezarCarrera").disabled = true;
+				//Mira en que posicion esta el coche y lo mete en una variable
+				var izquierda = coche.offsetLeft;
+				
+				var id = setInterval(function (){//Empieza un intervalo
+					if(izquierda < 800){//comprueba que la posicion del coche sea menos a 1600px
+						izquierda++;//incrementa la posicion del coche
+						coche.style.left = izquierda + 'px'; //cambia la posicion de coche
+					} else{
+						
+						 clasificacion[cuentaClasificacion] = coche.id;//mete en el array clasificacion la posiciones de los coches
+						 cuentaClasificacion++;
+						 muestraClasificacion(clasificacion[cuentaClasificacion - 1]);
+						 console.log(clasificacion[cuentaClasificacion - 1]);
+						 clearInterval(id);//cierra el intervalo
+						//if(contadoClasificacion == 1){
+						//	compruebaApuesta(clasificacion[0]);
+						//}
+					}
+				},velocidad);//el intervalo se repite cada 8 milisegundos
+			}
+        var muestraClasi=[];//Guardo los coches que llegan primero a la meta
+		var contadorMuesClasi=0;//Contador del array
+	  //Funcion que muestra en que lugares llegan los coches
+      function muestraClasificacion(clasificacion){
+	    
+	  	for(var i = 0; i < 1 ; i++){
+					muestraClasi[contadorMuesClasi] = clasificacion;//mete los coches en orden de llegada en un array
+				}
+				contadorMuesClasi++;
+				document.getElementById("lugares").innerHTML = muestraClasi;//muestra clasificacion
+				//habilita el boton de reiniciar
+				//document.getElementById("reiniciar").disabled = false;
+	  
+	  
+	  
+	  
+	  
+	  }
+  
+      function generaColor(color){
+		  var colores=color;
+		  colores = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
 
   		 return colores;
 
@@ -91,13 +163,78 @@ function inicio() {
 
 </script>
 <body>
+<div id="participantes">
+				<table>
+					<tr>
+						<td colspan="2">
+							<label for="numCoches">Numero de coches: </label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<select id="numCoches">
+								<option value="2" selected>2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</td>
+						<td>
+							<button id="ponerCoches" onclick="crear()">Crear</button>
+						</td>
+					</tr>
+				</table>
+		</div>
+		
+		<div id="apuesta">
+			<table>
+					<tr>
+						<td>
+							<label for="apostarPor">Apostar por: </label>
+						</td>
+						<td>
+							<select id="cocheApostar">
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="cantidad">Cantidad: </label>
+						</td>
+						<td>
+							<input type="number" name="cantidad" id="cantidadApostada" size="8" maxlength="40" required="required" >	
+						</td>
+					<tr>
+						<td>
+							<label id="dinero">Disponible: 400€ </label>
+						</td>
+					</tr>
+						<td colspan="2">
+							<button id="hacerApuesta" onclick="apuesta()">Apostar</button>
+						</td>
+					</tr>
+				</table>
+		</div>
+		
+		<div id="posicion">
+		  <h1>Posiciones</h1>
+		   <div id="lugares"></div>
+		
+		</div>
+		
 
 <p>
-<button onclick="inicio()">Click Me</button>
+<button onclick="empezar()" id="empezarCarrera">Empezar</button>
 </p>
 
 <div id ="contenedor">
-
+<img id="ini" src="inicio.jpg" alt="Inicio de meta"></img>
+<img id="fin" src="final.jpg" alt="Final de la meta"></img>
 </div>
 
 

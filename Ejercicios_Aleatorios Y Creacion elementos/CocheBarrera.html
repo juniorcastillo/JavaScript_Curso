@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Documento sin t&iacute;tulo</title>
+<style>
+		
+#contenedor {
+  width:800px;
+  height:500px;
+  border:2px solid black;
+  position: absolute;
+  background-color:green;
+ }
+#coche {
+            position:absolute;
+			top:400px;
+		   
+            background-color:red;
+     
+			border-radius:100%;
+			width:50px;
+			height:50px;
+			
+        }
+		
+#puerta {
+            position:absolute;
+			left:400px;
+			top:370px;
+            background-color:purple;
+			width:50px;
+			height:120px;
+			
+        }
+
+#contenedorBotones{
+
+ border:2px solid black;
+ width:400px;
+
+}
+
+</style>
+<script>
+    var cuentaBola=1;
+	var valor1;
+	var vecesClick;
+    var carro;
+	var posicion;
+	var top;
+	var valordoor=false;
+
+	function avanzar(valor){
+	       
+	       carro= document.getElementById("coche");
+		  
+			 posicion = coche.offsetLeft;
+			 top=coche.offsetTop;
+			 id = setInterval(frame, 5);
+			function frame() {
+				if (posicion < 348 ) {
+				   posicion++;
+				   coche.style.left = posicion + 'px';
+				   top=coche.offsetTop;
+				//   coche.setAttribute("onclick","crearBomba(posicion)");//Envio la posicion actual donde esta el avion
+				}
+				else if ((valor) && (posicion < 800)){
+				   posicion++;
+				   coche.style.left = posicion + 'px';
+				   top=coche.offsetTop;
+				
+				}
+				else{
+				clearInterval(id);
+				
+				}
+			}
+	
+	}
+	
+	function retroceder(valor){
+	       
+	       carro= document.getElementById("coche");
+		  
+			 posicion = coche.offsetLeft;
+			 top=coche.offsetTop;
+			 id = setInterval(frame, 5);
+			function frame() {
+				if (posicion > 425 ) {
+				   posicion--;
+				   coche.style.left = posicion + 'px';
+				   top=coche.offsetTop;
+				//   coche.setAttribute("onclick","crearBomba(posicion)");//Envio la posicion actual donde esta el avion
+				}
+				else if ((valor) && (posicion > 1)){
+				   posicion--;
+				   coche.style.left = posicion + 'px';
+				   top=coche.offsetTop;
+				
+				}
+				else{
+				clearInterval(id);
+				
+				}
+			}
+	
+	}
+	function abrir(){
+	     
+	      avanzar(valordoor=true);
+		 var alturaPuerta=puerta.offsetTop;
+		 for(var i=alturaPuerta; i >100;i--){
+			 
+			   puerta.style.top = i + "px";
+			
+		 }
+		
+	}
+		
+	function parar(){
+	
+	
+		clearInterval(id);
+	
+	
+	
+	}
+	
+		function cerrar(){
+	     
+	 
+		 var alturaPuerta=puerta.offsetTop;
+		 for(var i=alturaPuerta; i <385;i++){
+			 
+			   puerta.style.top = i + "px";
+			
+		 }
+		
+	}
+	
+	
+	
+	
+	
+
+</script>
+
+</head>
+
+<body>
+
+<div id="contenedorBotones">
+	<button id="avanza" onclick="avanzar(valordoor)" >Avanzar</button>
+	<button id="abrir" onclick="abrir()" >Abrir</button>
+	<button id="para" onclick="parar()" >Parar</button>
+	<button id="cerrar" onclick="cerrar()" >cerrar puerta</button>
+	<button id="atras" onclick="retroceder(valordoor)">retroceder</button><br>
+</div>
+<div id="contenedor">
+
+<div id="coche"></div>
+<div id="puerta"></div>
+</div>
+
+</body>
+</html>

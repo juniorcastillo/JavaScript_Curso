@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Capas aleatorias</title>
+<style>
+	div { 
+	width:50px; 
+	height: 35px; 
+	text-align:center; 
+	padding-top:15px;
+	}
+	
+	.capa { 
+	background-color:#111; 
+	color: #f8f8f8; 
+	font-size:20px; 
+	position:relative;
+	border-radius:100%
+	}
+</style>
+<script>
+      var valor1;
+	  var capa;
+	function crea(capaSelec){
+			
+		//crear la capa y aplicar clase
+	    capa = document.createElement("div");				 
+		capa.className = capaSelec.className;
+		capa.onclick= capaSelec.onclick;//Cuando le doy a la capa genera la bola
+			
+		// crear texto dentro de una capa y cada vez 
+		var textoElem = document.createTextNode(parseInt(capaSelec.innerHTML) + 1);		
+		capa.appendChild(textoElem);	
+		
+		//crear valores aleatorios para la posicion		
+		var alto = Math.floor(Math.random()*300);
+		capa.style.top = alto +"px";
+		
+		var ancho = Math.floor(Math.random()*500);
+		capa.style.left = ancho +"px";
+
+		// añadir la nueva capa al contenedor
+		document.getElementById("contenedor").appendChild(capa);
+		//envio el objeto a la funcion select donde vera si es un objeto de la class y lo borrara
+        capa.setAttribute("ondblclick","seleccion(this)");
+	
+	}
+	
+	
+	//Cuento cuantas veces le hago click a las bolas 
+		 function seleccion(contador) {
+		
+		 // contador.value++;
+         //document.getElementById("cuenta").innerHTML= "ID " +contador.id + " click " + contador.value;
+		   
+         // Borro la bola que selecciono  veo que sea de la clase bola y luego guardo en valor1 y la borro
+            if (contador.className == "capa") {
+                valor1 =contador;
+				borrar(valor1);
+				
+            }
+		  }
+		  
+        function borrar(bola) {
+
+            capa.parentNode.removeChild(bola);
+
+        }
+		
+         
+
+</script>
+</head>
+
+<body id="contenedor">
+<div class="capa" onclick="crea(this)">1</div>
+</body>
+</html>

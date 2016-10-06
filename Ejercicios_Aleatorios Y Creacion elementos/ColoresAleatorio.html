@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Documento sin t&iacute;tulo</title>
+<style>
+.bola {
+          
+		   
+            position: relative;
+            background-repeat: no-repeat;
+            background-position: center;
+			border-radius:100%;
+        }
+		
+#contenedor{
+  width:800px;
+  height:500px;
+  border:2px solid black;
+  position: absolute;
+}
+
+</style>
+<script>
+     var cuentaBola=1;
+	 var valor1;
+	 var vecesClick;
+     function generaBola() {
+         
+			//Crea capa 
+            var bola = document.createElement("div");
+            //Asigna clase
+			bola.className = "bola";
+            //Asigna evento onclick
+			bola.onclick = seleccion;
+			//Posiciona left
+            bola.style.left = getRand(50, 550) + "px";
+			//Posiciona top
+            bola.style.top = getRand(50, 350) + "px";
+            //Le asigno un id a la bola lo almaceno un id a un objecto bola
+			 bola.id = cuentaBola;
+			//le doy un valor a el obejto bola
+             bola.value =0;
+			//Cuenta los click que le das a la bola envio el valor la la funcion seleccion cunado le hago click a una bola en especifica
+			 bola.setAttribute("onclick","seleccion(this)");
+			 
+			 //Envio la bola que quiero mover
+			 bola.setAttribute("ondblClick" , "mover(this)");
+			//incrementamos el contador
+             cuentaBola++;
+			
+			//directamente añado la la  bola en el contenedor
+            document.getElementById("contenedor").appendChild(bola);
+            //Creo el color aleatoria mente de la bola
+            var colorBola ="rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + 					")";
+			//Genero el ancho y el largo(el tamaño de la bola) aleatoriamente y le agrego el color
+			
+			var tamano= getRand(10,100);
+			bola.style.backgroundColor = colorBola;
+			bola.style.width=tamano + "px";
+			bola.style.height=tamano + "px";
+			
+        }
+		
+		
+		
+		
+		
+		//Cuento cuantas veces le hago click a las bolas 
+		 function seleccion(contador) {
+		
+		 contador.value++;
+          
+		  
+		  document.getElementById("cuenta").innerHTML= "ID " +contador.id + " click " + contador.value;
+		  }
+		  
+		 
+          /**Borro la bola que selecciono  veo que sea de la clase bola y luego guardo en valor1 y la borro
+            if (this.className == "bola") {
+                valor1 = this;
+				borrar(valor1);
+				
+            } */
+         
+		
+	    function mover(elem){
+		   var izquierda =elem.offsetLeft; //Tomo el valor que tiene de la izquierda
+		   var arriba =elem.offsetTop;//Tomo el valor que tiene de la derecha
+		   var move=setInterval(function(){
+			   if (izquierda < 750){
+				   izquierda++;
+				  elem.style.left = izquierda + 'px';
+		  
+				}else{
+				  borrar(elem);
+				  clearInterval(move);
+				 } 
+		    },10);
+		}
+		 
+	    function limpia(){
+	       var todasCapas= document.querySelectorAll(".bola");
+			
+			   
+			 for (var i=0 ;i <todasCapas.length;i++){
+					todasCapas[i].parentNode.removeChild(todasCapas[i]);
+               
+			 }
+
+			     
+			  
+	    }
+	
+		 	 
+		
+        	
+
+        function borrar(bola) {
+
+            bola.parentNode.removeChild(bola);
+
+        }
+       function getRand(min, max) {
+
+		return Math.random() * (max - min) + min;
+        }
+
+	  function generaColor(color){
+    	var newColor = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+
+  		 return newColor;
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<button id="crear" onclick="generaBola()" >Crear</button>
+<button id="limpiar" onclick="limpia()">Limpiar </button><br>
+<div id="cuenta"></div>
+<div id="contenedor"></div>
+
+</body>
+</html>
