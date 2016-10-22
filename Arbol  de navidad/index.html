@@ -7,6 +7,7 @@
 	<script src="js/jquery-2.1.4.min.js"></script>
     <script>
 	 var cuentaBola=1;
+	 var cuentaEliminada=1;
 $(document).ready(function(){
 			$("#adornar").click(function(){
 			//concateno el numero com las bolas
@@ -14,11 +15,37 @@ $(document).ready(function(){
 			     var bolas = $('<div class="bolita" id="'+ idBola+ '"></div>');
 				 $("#juego").append(bolas);
                  $("#" + idBola).animate({left:getRand(100,300)+'px' , top: getRand(100,300)+'px'});
+				 $("#creadas").html(cuentaBola);
 				 cuentaBola+=1;
                 
 			 
 			}); 
 			
+			$("#mover").click(function(){
+			  //alert ("hola");
+			   $("#arbol").animate({left: '-10px'},100);
+			   $("#arbol").animate({left: '10px'},100);
+			   $("#arbol").animate({left: '-10px'},70);
+			   $("#arbol").animate({left: '10px'},70);
+			   $("#arbol").animate({left: '-10px'},50);
+			   $("#arbol").animate({left: '10px'},50,function(){
+			    
+				   $(".bolita").each(function(){
+						  $(this).animate({top: '350px'},3000,function(){
+						     $("#eliminadas").html(cuentaEliminada);
+							 $(this).remove();
+							 cuentaEliminada+=1;
+			                  cuentaBola=1;
+						  });
+						
+					  });			   
+			   
+			   });
+			   
+			   
+			  
+			
+			});
 		     function getRand(min, max) {
 		
 				return Math.random() * (max - min) + min;
